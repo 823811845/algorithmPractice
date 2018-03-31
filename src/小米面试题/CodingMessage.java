@@ -120,55 +120,55 @@ public class CodingMessage {
 			chars = input.toCharArray();
 			result = apartUtil(0, chars.length);
 		}
+	}
 
-		// "2[a3[b]]c4[d]";
-		// 整体递归，例如a2[a3[b]]c,则这里传入的就是a3[b]
-		public String apartUtil(int start, int end) {
-			int start1 = 0, end1 = 0;
-			String result = "";
+	// "2[a3[b]]c4[d]";
+	// 整体递归，例如a2[a3[b]]c,则这里传入的就是a3[b]
+	public String apartUtil(int start, int end) {
+		int start1 = 0, end1 = 0;
+		String result = "";
 
-			for (int i = start; i < end; i++) {
-				if (chars[i] > 48 && chars[i] <= 57) {
-					int figure = findFigure(chars, i);
-					int index = 0;
-					// 注意，你在这里迷惑过,是i和start到底是哪个，应该是i，这里设计算法的时候，你必须要知道每一个变量代表的内容。
-					for (int j = i + ((figure + "").length()); j < end; j++) {
-						// 这里j的初始值一定是chars[j] == '['的
-						if (chars[j] == '[') {
-							if (index == 0) {
-								start1 = j + 1;
-							}
-							index++;
-						}
-						if (chars[j] == ']') {
-							index--;
-							if (index == 0) {
-								end1 = j;
-							}
-						}
+		for (int i = start; i < end; i++) {
+			if (chars[i] > 48 && chars[i] <= 57) {
+				int figure = findFigure(chars, i);
+				int index = 0;
+				// 注意，你在这里迷惑过,是i和start到底是哪个，应该是i，这里设计算法的时候，你必须要知道每一个变量代表的内容。
+				for (int j = i + ((figure + "").length()); j < end; j++) {
+					// 这里j的初始值一定是chars[j] == '['的
+					if (chars[j] == '[') {
 						if (index == 0) {
-							// 递归调用函数
-							String result1 = apartUtil(start1, end1);
-
-							// StringBuffer buffer = new StringBuffer();
-							// for (int k = start + ((figure + "").length()) +
-							// 1; k < end - 1; j++) {
-							// buffer.append(chars[i]);
-							// }
-							for (int k = 0; k < figure; k++) {
-								// result+=buffer.toString();
-								result += result1;
-							}
-							i = j;
-							break;
+							start1 = j + 1;
+						}
+						index++;
+					}
+					if (chars[j] == ']') {
+						index--;
+						if (index == 0) {
+							end1 = j;
 						}
 					}
+					if (index == 0) {
+						// 递归调用函数
+						String result1 = apartUtil(start1, end1);
 
-				} else {
-					result += chars[i];
+						// StringBuffer buffer = new StringBuffer();
+						// for (int k = start + ((figure + "").length()) +
+						// 1; k < end - 1; j++) {
+						// buffer.append(chars[i]);
+						// }
+						for (int k = 0; k < figure; k++) {
+							// result+=buffer.toString();
+							result += result1;
+						}
+						i = j;
+						break;
+					}
 				}
+
+			} else {
+				result += chars[i];
 			}
-			return result;
 		}
+		return result;
 	}
 }

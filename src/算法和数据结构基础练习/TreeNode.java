@@ -8,7 +8,8 @@ public class TreeNode<T extends Comparable<T>> {
 	TreeNode parentNode = null;
 	TreeNode leftNode = null;
 	TreeNode rightNode = null;
-	private int depth = 0; // 用来记录节点的高度，进行单旋转或双旋转
+	private int depth = 0;
+	// / 用来记录节点的高度，进行单旋转或双旋转
 
 	public TreeNode(T t) {
 		this.val = t;
