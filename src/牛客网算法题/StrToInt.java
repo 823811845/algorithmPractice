@@ -31,10 +31,11 @@ public class StrToInt {
         return index;
     }
 
-   @Test
-public void testName() throws Exception {
-	
-}
+
+    public void testName() throws Exception {
+
+    }
+
     public void test() {
         System.out.println(StrToInt("-2147483648"));
     }

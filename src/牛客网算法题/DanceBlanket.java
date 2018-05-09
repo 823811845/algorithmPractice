@@ -47,11 +47,10 @@ public class DanceBlanket {
                 continue;
             }
             for (int j = 1; j < n; j++) {
-                result = temp1 + 2 * temp2;
+                result = temp1 + 2 * temp2;                //对这个数字取余数（用来简化计算）
                 result = result % 10000;
                 temp2 = temp1;
                 temp1 = result;
-
             }
             System.out.println((int) (result));
         }
