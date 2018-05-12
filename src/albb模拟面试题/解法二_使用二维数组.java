@@ -1,25 +1,23 @@
-package albb面试题;
+package albb模拟面试题;
 
 import java.util.ArrayList;
 
-public class NewDemo {
+public class 解法二_使用二维数组 {
     char[] chars;
     //这里规定二维数组的第一个数字为列号（也就是x）
     boolean[][] flag;
+
     String str;
 
     ArrayList<Integer> from = new ArrayList<>();
     ArrayList<Integer> to = new ArrayList<>();
 
     public static void main(String[] args) {
-        NewDemo demo = new NewDemo();
-        //demo.init("我都说了我要退款我要退款hhh，就是要退款");
+        解法二_使用二维数组 demo = new 解法二_使用二维数组();
+        demo.init("我都说了我要退款我要退款hhh嘻哈嘻哈嘻哈，就是要退款");
         //demo.init("要退款要退款hhh");
-        demo.init("hhh");
+        //demo.init("hhh");
         demo.checkSeq();
-
-        System.out.println(demo.from);
-        System.out.println(demo.to);
         System.out.println(demo.removeSeq());
     }
 

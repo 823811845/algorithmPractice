@@ -1,68 +1,35 @@
 package 树的基础练习;
 
+//代码一定要能够复用，否则就不能称之为好的代码
+//这个代码可以随便改
 public class MultiwayTree<T extends Comparable<T>> {
-	// Integer sonNum;
-	protected MultiwayNode<T> root;
+    protected MultiwayNode<T> root;
+    private int deepth;
 
-	public MultiwayTree(T val) {// MultiwayNode root){
-		// this.sonNum=sonNum;
-		root = new MultiwayNode<T>(val);
-	}
+    public MultiwayTree(T val) {
+        root = new MultiwayNode<T>(val);
+    }
 
-	public MultiwayTree() {
-		root = new MultiwayNode<T>(null);
+    public MultiwayTree() {
+        root = new MultiwayNode<T>(null);
 
-	}
+    }
 
-	MyQueue<MultiwayNode<T>> queue = new MyQueue();
-	MyQueue<MultiwayNode<T>> queue2 = new MyQueue();
-	boolean flag, flag2;
+    public int getDeepth() {
+        return deepth;
+    }
 
-	// 遍历横向遍历一棵树：
-	public String toString() {
-		int maxDepth = 6;
-		String str = "";
-		if (root == null) {
-			return "null";
-		}
+    public void setDeepth(int deepth) {
+        this.deepth = deepth;
+    }
 
-		// 开始遍历
-		queue.add(root);
-		MultiwayNode<T> node = root;
-		int depth = 0;
-		while (!queue.isEmpty() || !queue2.isEmpty()) {
-			depth++;
-			// 每行之前的空格
-			for (int i = 0; i < (Math.pow(2, maxDepth - depth))*node.sonNodes.size()/2; i++) {
-				str += " ";
-			}
-			while (!queue.isEmpty()) {
-				node = queue.poll();
-				if (node == null) {
-					queue2.add(null);
-					queue2.add(null);
-					str += "#";
-				} else {
-					for(int i=0;i<node.sonNodes.size();i++){
-						queue2.add(node.sonNodes.get(i));
-					}
-					str += node.toString();
-				}
-				// 每行中间的空格
-				for (int i = 0; i < (Math.pow(2, maxDepth - depth + 1) - 1)*node.sonNodes.size()/2; i++) {
-					str += " ";
-				}
-			}
-			str += "\n";
-			MyQueue<MultiwayNode<T>> tempQueue = queue;
-			queue = queue2;
-			queue2 = tempQueue;
-		}
-		return str;
-	}
+    // 横向遍历一棵树：
+    public String toString() {
+        return root.treeToString();
+    }
 
-	// public static void main(String[] args) {
-	// MultiwayTree<String> ss=new MultiwayTree<>();
-	// ss.root.sonNodes.get(0).
-	// }
+    //public static void main(String[] args) {
+    //MultiwayTree<String> ss=new MultiwayTree<>();
+    //ss.root.sonNodes.get(0).
+    //}
 }

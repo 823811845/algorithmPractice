@@ -1,4 +1,4 @@
-package albb面试题;
+package albb模拟面试题;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,13 +10,34 @@ import java.util.Scanner;
  * 2.重复的字数必须大于1，所以：【阿里旺旺】，不需要去重（这里有一个细节没说清楚，如果是【阿里旺旺旺旺】，重复字数等于1，但是重复次数又大于等于4的这种，要不要去重）
  * 3.数字不能进行去重，所以：【10000】，不需要去重
  */
-public class 阿里巴巴模拟笔试 {
+public class 解法一_使用hashmap {
+    String str;
+    HashMap<Character, LinkedList<Integer>> map;
+
     public static void main(String[] args) {
-        阿里巴巴模拟笔试 obj = new 阿里巴巴模拟笔试();
+        解法一_使用hashmap obj = new 解法一_使用hashmap();
         Scanner scan = new Scanner(System.in);
         while (scan.hasNext()) {
-            String str = scan.nextLine();
-            System.out.println(obj.removeSeq(str));
+            //demo.init("我都说了我要退款我要退款hhh嘻哈嘻哈嘻哈，就是要退款");
+            //demo.init("要退款要退款hhh");
+            //demo.init("hhh");
+            obj.str = scan.nextLine();
+            System.out.println(obj.removeSeq());
+        }
+    }
+
+    void init() {
+        map = new HashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            if (map.containsKey(str.charAt(i))) {
+                LinkedList<Integer> list = map.get(str.charAt(i));
+                list.add(i);
+            } else {
+                LinkedList<Integer> list = new LinkedList<>();
+                list.add(i);
+                map.put(str.charAt(i), list);
+            }
+
         }
     }
 
@@ -25,36 +46,39 @@ public class 阿里巴巴模拟笔试 {
      * 这里的思路是，将相邻的两个首字母相同的子串进行比较，如果子串的长度大于1，而且内容完全相同，那就删除多余的子串，
      * 然后重新统计整个字符串（这一步有没有什么优化的算法？，重复这么做很麻烦）。
      */
-    public String removeSeq(String str) {
-        //定义一个数据结构，用来比对数据
-        HashMap<Character, LinkedList<Integer>> map = new HashMap<>();
-        for (int i = 0; i < str.length(); i++) {
-            LinkedList<Integer> list = new LinkedList<>();
-            list.add(i);
-            map.put(str.charAt(i), list);
-        }
+    public String removeSeq() {
+        init();
+        //Iterator iterator = map.keySet().iterator();
+        //while (iterator.hasNext()) {
+        //    Object key = iterator.next();
+        //    System.out.println("map.get(key) is :"+map.get(key));
+        //}
 
         for (int i = 0; i < str.length(); i++) {
-            if (map.containsKey(str.charAt(i)) && map.get(str.charAt(i)).size() > 2) {
+            if (map.containsKey(str.charAt(i)) && map.get(str.charAt(i)).size() >= 2) {
                 //则有可能存在重复字符串，做处理
                 //查看重复次数是否大于2，大于2的时候才需要处理
                 //FIXME 你给我看清楚，题目上写的是，重复的字数必须大于1，而不是重复的次数
+                checkSeq(map.get(str.charAt(i)));
             }
-
         }
-        return null;
+        return str;
     }
 
     /**
-     * @param str
      * @param list
      * @return
      */
-    public String checkSeq(String str, LinkedList<Integer> list) {
+    public String checkSeq(LinkedList<Integer> list) {
         for (int i = 0; i < list.size() - 1; i++) {
-            if (checkNeighbor(str, list, list.get(i))) {
-                //说明这两个字符串相同
-
+            int tail = checkNeighbor(str, list, i);
+            int b = list.get(i + 1);
+            if (tail > b) {
+                //说明有重复的内容
+                str = str.substring(0, b) + str.substring(tail);
+                init();
+            } else {
+                //说明没有重复的内容
             }
         }
         return null;
@@ -66,21 +90,37 @@ public class 阿里巴巴模拟笔试 {
      *
      * @param str
      * @param list
-     * @param a
+     * @param i
      * @return
      */
-    public boolean checkNeighbor(String str, LinkedList<Integer> list, int a) {
-        int b = list.get(a + 1);
-        if (str.substring(list.get(a), b).equals(str.substring(b, b + b - a))) {
-            //进行递归验证，
-            if (checkNeighbor(str, list, a + 1)) {
-                //说明这两个字符串相同
-
-            }
-            return true;
+    public int checkNeighbor(String str, LinkedList<Integer> list, int i) {
+        if (i >= list.size() - 1) {
+            //-1表示已经到末尾了
+            return -1;
         }
-        return false;
+        int a = list.get(i);
+        int b = list.get(i + 1);
+        //这里要考虑一下，如果b+b-a超出字符串长度了怎么办,(那说明这两个子串不可能相同，直接返回)
+        if (b + b - a > str.length() - 1) {
+            return b;
+        }
+        if (str.substring(a, b).equals(str.substring(b, b + b - a))) {
+            //进行递归验证，
+            int tail = checkNeighbor(str, list, i + 1);
+            //这里提取之前设置的信号，
+            if (tail == -1) {
+                //表示已经到末尾了，
+                return b + b - a;
+            }
+            if (tail > b + b - a) {
+                //说明这两个字符串相同
+                return tail;
+            }
+            return b + b - a;
+        }
+        return b;
     }
+
 
     /**
      * 这个是备用的，
