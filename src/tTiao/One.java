@@ -1,4 +1,4 @@
-package tTiao ‘Ã‚;
+package tTiao;
 
 import java.util.Scanner;
 
@@ -58,7 +58,6 @@ public class One {
             code = code.substring(0, from) + code.substring(to, code.length());
             index++;
         }
-
         System.out.println(index);
     }
 }

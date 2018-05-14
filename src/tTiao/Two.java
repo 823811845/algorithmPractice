@@ -1,4 +1,4 @@
-package tTiao试题;
+package tTiao;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -12,6 +12,8 @@ import java.util.TreeSet;
  * 对于40%的数据，0<m,n<20万
  * 对于100%的数据，0<m,n<200万
  * 字符串为UTF-8的编码，包括汉字等各种字符串，不仅限于ASCII码
+ * <p>
+ * pass-test
  */
 
 /**
@@ -42,14 +44,12 @@ public class Two {
         }
     }
 
-
     public void test() {
         Tree tree = new Tree();
         tree.addword("hello");
         tree.addword("hellol");
         tree.addword("show");
         tree.addword("xixihaha");
-
 
         System.out.println(tree.checkPrefix("showme"));
         System.out.println(tree.checkPrefix("hellosindi"));

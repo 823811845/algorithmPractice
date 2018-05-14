@@ -1,5 +1,6 @@
-package tTiao试题;
+package tTiao;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -12,22 +13,58 @@ import java.util.Scanner;
  * 经过n-1轮后，剩下的最后一个人即被录取
  * 所以最后被录取的人的编号与（n，m，A1，A2，A3，....Am）相关
  * 试由（n，m，A1，A2，A3，....Am）计算出最后一人的编号。
- * 
+ * <p>
  * 例如（n，m，）分别为4,2，（A1，A2，A3，....Am）为3,1
  * 那么输出1
  */
 public class Three {
+    /**
+     * 这一类的场景题，最简单的方法莫过于直接去模拟它；
+     */
+
+    LinkedList<Integer> ns = new LinkedList<>();
+    int[] ms;
+
     public static void main(String[] args) {
-        Two main = new Two();
+        Three main = new Three();
         main.show();
     }
 
     public void show() {
         //接收数据
         Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        for (int i = 0; i < a; i++) {
-            sc.nextLine();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        ms = new int[m];
+
+        for (int i = 0; i < n; i++) {
+            ns.add(i);
         }
+        for (int i = 0; i < m; i++) {
+            ms[i] = sc.nextInt();
+        }
+        System.out.println(process());
     }
+
+    public int process() {
+        //分别表示当前轮的m和n
+        int m = 0, n = 0;
+        for (int i = 0; ns.size() > 1; i++) {
+            m = ms[i];
+            for (int j = 0; j < m; j++) {
+                n++;
+                if (n >= ns.size()) {
+                    n = 0;
+                }
+            }
+            //淘汰这个人
+            ns.remove(n);
+            if (i >= ms.length-1) {
+                i = 0;
+            }
+        }
+        return ns.get(0);
+    }
+
+
+}

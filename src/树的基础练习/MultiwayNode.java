@@ -1,11 +1,12 @@
 package Ê÷µÄ»ù´¡Á·Ï°;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class MultiwayNode<T extends Comparable<T>> {
     public T val = null;
     public double weight = 1;
-    public TreeSet<MultiwayNode<T>> sonNodes = new TreeSet<>();
+    public ArrayList<MultiwayNode<T>> sonNodes = new ArrayList<>();
 
     public MultiwayNode(T val) {
         this.val = val;
